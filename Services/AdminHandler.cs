@@ -7,52 +7,52 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace simple_aspnet_auth
 {
-	public class AdminRequirement : IAuthorizationRequirement
-	{
-		public AdminRequirement(bool includeSuperUser = false)
-		{
-			IncludeSuperUser = includeSuperUser;
-		}
+  public class AdminRequirement : IAuthorizationRequirement
+  {
+    public AdminRequirement(bool includeSuperUser = false)
+    {
+      IncludeSuperUser = includeSuperUser;
+    }
 
-		public bool IncludeSuperUser { get; set; }
+    public bool IncludeSuperUser { get; set; }
 
-	}
+  }
 
-	public class AdminHandler : AuthorizationHandler<AdminRequirement>
-	{
-		protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AdminRequirement requirement)
-		{
-			var user = context.User;
-			var identity = user.Identity;
-			var isAuthenticated = identity.IsAuthenticated;
+  public class AdminHandler : AuthorizationHandler<AdminRequirement>
+  {
+    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AdminRequirement requirement)
+    {
+      var user = context.User;
+      var identity = user.Identity;
+      var isAuthenticated = identity.IsAuthenticated;
 
-			if (!isAuthenticated)
-			{
-				return Task.CompletedTask;
-			}
+      if (!isAuthenticated)
+      {
+        return Task.CompletedTask;
+      }
 
-			var claims = user.Claims;
-			var claimNames = from x in claims select x.Type;
-			var groups = new List<string> { GroupNames.Admins };
+      var claims = user.Claims;
+      var claimNames = from x in claims select x.Type;
+      var groups = new List<string> { GroupNames.Admins };
 
-			if (requirement.IncludeSuperUser)
-			{
-				groups.Add(GroupNames.SuperUsers);
-			}
+      if (requirement.IncludeSuperUser)
+      {
+        groups.Add(GroupNames.SuperUsers);
+      }
 
-			var isAdmin = claimNames.Any(groups.Contains);
+      var isAdmin = claimNames.Any(groups.Contains);
 
-			if (!isAdmin)
-			{
-				return Task.CompletedTask;
-			}
+      if (!isAdmin)
+      {
+        return Task.CompletedTask;
+      }
 
-			context.Succeed(requirement);
+      context.Succeed(requirement);
 
-			return Task.CompletedTask;
+      return Task.CompletedTask;
 
-		}
+    }
 
-	}
+  }
 
 }

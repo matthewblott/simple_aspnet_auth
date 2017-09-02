@@ -7,21 +7,21 @@ namespace simple_aspnet_auth
   {
     IList<User> users;
 
-		public UserService()
+    public UserService()
     {
-      this.CreateList(); 
+      this.CreateList();
     }
 
-		public User GetByName(string name)
-		{
-			var q = from x in this.users where x.Name == name select x;
-			var user = q.FirstOrDefault();
+    public User GetByName(string name)
+    {
+      var q = from x in this.users where x.Name == name select x;
+      var user = q.FirstOrDefault();
 
-			return user;
+      return user;
 
-		}
+    }
 
-		void CreateList()
+    void CreateList()
     {
       const string password = "password";
 
@@ -57,9 +57,9 @@ namespace simple_aspnet_auth
         {
           Id = 2,
           Name = "superuser",
-    		  Email = "superuser@domain",
-		  	  Password = password,
-    		  Groups = new List<Group>
+          Email = "superuser@domain",
+          Password = password,
+          Groups = new List<Group>
           {
             new Group
             {
@@ -78,10 +78,10 @@ namespace simple_aspnet_auth
         {
           Id = 3,
           Name = "john",
-					Email = "john@domain",
-  			  Password = password,
-    		  Groups = new List<Group>
-    		  {
+          Email = "john@domain",
+          Password = password,
+          Groups = new List<Group>
+          {
             new Group
             {
               Id = 1,
@@ -94,9 +94,9 @@ namespace simple_aspnet_auth
         {
           Id = 4,
           Name = "jane",
-    		  Email = "jane@domain",
-					Password = password,
-    		  Groups = new List<Group>
+          Email = "jane@domain",
+          Password = password,
+          Groups = new List<Group>
           {
             new Group
             {

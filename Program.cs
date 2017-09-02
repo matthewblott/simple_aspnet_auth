@@ -9,32 +9,22 @@ namespace simple_aspnet_auth
   {
     public static void Main(string[] args)
     {
-			var config = new ConfigurationBuilder()
-			  .SetBasePath(Directory.GetCurrentDirectory())
-			  .AddJsonFile("hosting.json", optional: true)
-			  .Build();
+      var config = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("hosting.json", optional: true)
+        .Build();
 
-      var builder = new WebHostBuilder()
+      var host = new WebHostBuilder()
         .UseKestrel()
         .UseConfiguration(config)
         .UseContentRoot(Directory.GetCurrentDirectory())
-        .UseStartup<Startup>();
+        .UseStartup<Startup>()
+        .Build();
 
-			try
-      {
-        var host = builder.Build();
+      host.Run();
 
-				host.Run();
-
-			}
-      catch(Exception ex)
-      {
-        Console.WriteLine(ex.Message);
-        Console.ReadLine();
-      }
-
-		}
-
+    }
+    
   }
 
 }

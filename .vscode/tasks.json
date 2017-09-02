@@ -1,16 +1,16 @@
 {
-    "version": "0.1.0",
-    "command": "dotnet",
-    "isShellCommand": true,
-    "args": [],
-    "tasks": [
-        {
-            "taskName": "build",
-            "args": [
-                "${workspaceRoot}/simple_aspnet_auth.csproj"
-            ],
-            "isBuildCommand": true,
-            "problemMatcher": "$msCompile"
-        }
-    ]
+  "version": "0.1.0",
+  "command": "dotnet",
+  "isShellCommand": true,
+  "args": [],
+  "tasks": [
+    {
+      "taskName": "build",
+      "args": [
+        "${workspaceRoot}/simple_aspnet_auth.csproj"
+      ],
+      "isBuildCommand": true,
+      "problemMatcher": "$msCompile"
+    }
+  ]
 }
