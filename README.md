@@ -50,8 +50,11 @@ curl -X POST http://localhost:5000/api/login -H "Content-Type: application/x-www
 The above command should result in something similar to the following (obviously the token value will be different).
 
 ```
- {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBkb21haW4iLCJqdGkiOiJkNGM5MDE0Zi0zOGYxLTQ3NTItODU3YS03ZTc0YzU0MjY3ZDciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJhZG1pbnMiOiIxIiwic3VwZXJ1c2VycyI6IjIiLCJ1c2VycyI6IjMiLCJleHAiOjE1MDQzODk0NTEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwL2FwaS8ifQ.gFnf39Vj16vEmcI1HdwPajH6sRHusxtjZ2eh0Xc1cJs"}
- ```
+
+{  
+   "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBkb21haW4iLCJqdGkiOiJkNGM5MDE0Zi0zOGYxLTQ3NTItODU3YS03ZTc0YzU0MjY3ZDciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJhZG1pbnMiOiIxIiwic3VwZXJ1c2VycyI6IjIiLCJ1c2VycyI6IjMiLCJleHAiOjE1MDQzODk0NTEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwL2FwaS8ifQ.gFnf39Vj16vEmcI1HdwPajH6sRHusxtjZ2eh0Xc1cJs"
+}
+```
 
 The token value is then used with subsequent requests. For the examples below replace ```TOKEN_VALUE``` with whatever value is obtained from the step above.
 
@@ -99,7 +102,151 @@ Any authenticated user should be presented with something similar to the followi
 
 ```
 
-{"token":{"actor":null,"audiences":["http://localhost:5000/api/"],"claims":[{"issuer":"http://localhost:5000/api/","originalIssuer":"http://localhost:5000/api/","properties":{},"subject":null,"type":"sub","value":"admin@domain","valueType":"http://www.w3.org/2001/XMLSchema#string"},{"issuer":"http://localhost:5000/api/","originalIssuer":"http://localhost:5000/api/","properties":{},"subject":null,"type":"jti","value":"f85815ae-69c4-4fec-8553-bc1199e3cdce","valueType":"http://www.w3.org/2001/XMLSchema#string"},{"issuer":"http://localhost:5000/api/","originalIssuer":"http://localhost:5000/api/","properties":{},"subject":null,"type":"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name","value":"admin","valueType":"http://www.w3.org/2001/XMLSchema#string"},{"issuer":"http://localhost:5000/api/","originalIssuer":"http://localhost:5000/api/","properties":{},"subject":null,"type":"admins","value":"1","valueType":"http://www.w3.org/2001/XMLSchema#string"},{"issuer":"http://localhost:5000/api/","originalIssuer":"http://localhost:5000/api/","properties":{},"subject":null,"type":"superusers","value":"2","valueType":"http://www.w3.org/2001/XMLSchema#string"},{"issuer":"http://localhost:5000/api/","originalIssuer":"http://localhost:5000/api/","properties":{},"subject":null,"type":"users","value":"3","valueType":"http://www.w3.org/2001/XMLSchema#string"},{"issuer":"http://localhost:5000/api/","originalIssuer":"http://localhost:5000/api/","properties":{},"subject":null,"type":"exp","value":"1504392381","valueType":"http://www.w3.org/2001/XMLSchema#integer"},{"issuer":"http://localhost:5000/api/","originalIssuer":"http://localhost:5000/api/","properties":{},"subject":null,"type":"iss","value":"http://localhost:5000/api/","valueType":"http://www.w3.org/2001/XMLSchema#string"},{"issuer":"http://localhost:5000/api/","originalIssuer":"http://localhost:5000/api/","properties":{},"subject":null,"type":"aud","value":"http://localhost:5000/api/","valueType":"http://www.w3.org/2001/XMLSchema#string"}],"encodedHeader":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9","encodedPayload":"eyJzdWIiOiJhZG1pbkBkb21haW4iLCJqdGkiOiJmODU4MTVhZS02OWM0LTRmZWMtODU1My1iYzExOTllM2NkY2UiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJhZG1pbnMiOiIxIiwic3VwZXJ1c2VycyI6IjIiLCJ1c2VycyI6IjMiLCJleHAiOjE1MDQzOTIzODEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwL2FwaS8ifQ","header":{"alg":"HS256","typ":"JWT"},"id":"f85815ae-69c4-4fec-8553-bc1199e3cdce","issuer":"http://localhost:5000/api/","payload":{"sub":"admin@domain","jti":"f85815ae-69c4-4fec-8553-bc1199e3cdce","http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name":"admin","admins":"1","superusers":"2","users":"3","exp":1504392381,"iss":"http://localhost:5000/api/","aud":"http://localhost:5000/api/"},"innerToken":null,"rawAuthenticationTag":null,"rawCiphertext":null,"rawData":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBkb21haW4iLCJqdGkiOiJmODU4MTVhZS02OWM0LTRmZWMtODU1My1iYzExOTllM2NkY2UiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJhZG1pbnMiOiIxIiwic3VwZXJ1c2VycyI6IjIiLCJ1c2VycyI6IjMiLCJleHAiOjE1MDQzOTIzODEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwL2FwaS8ifQ.AXpvgAE3ZFN8EnRVSkLUt0iCaFTySFnMTfSx_kWYFDk","rawEncryptedKey":null,"rawInitializationVector":null,"rawHeader":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9","rawPayload":"eyJzdWIiOiJhZG1pbkBkb21haW4iLCJqdGkiOiJmODU4MTVhZS02OWM0LTRmZWMtODU1My1iYzExOTllM2NkY2UiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJhZG1pbnMiOiIxIiwic3VwZXJ1c2VycyI6IjIiLCJ1c2VycyI6IjMiLCJleHAiOjE1MDQzOTIzODEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwL2FwaS8ifQ","rawSignature":"AXpvgAE3ZFN8EnRVSkLUt0iCaFTySFnMTfSx_kWYFDk","securityKey":null,"signatureAlgorithm":"HS256","signingCredentials":null,"encryptingCredentials":null,"signingKey":null,"subject":"admin@domain","validFrom":"0001-01-01T00:00:00","validTo":"2017-09-02T22:46:21Z"}}
+{  
+   "token":{  
+      "actor":null,
+      "audiences":[  
+         "http://localhost:5000/api/"
+      ],
+      "claims":[  
+         {  
+            "issuer":"http://localhost:5000/api/",
+            "originalIssuer":"http://localhost:5000/api/",
+            "properties":{  
+
+            },
+            "subject":null,
+            "type":"sub",
+            "value":"admin@domain",
+            "valueType":"http://www.w3.org/2001/XMLSchema#string"
+         },
+         {  
+            "issuer":"http://localhost:5000/api/",
+            "originalIssuer":"http://localhost:5000/api/",
+            "properties":{  
+
+            },
+            "subject":null,
+            "type":"jti",
+            "value":"f85815ae-69c4-4fec-8553-bc1199e3cdce",
+            "valueType":"http://www.w3.org/2001/XMLSchema#string"
+         },
+         {  
+            "issuer":"http://localhost:5000/api/",
+            "originalIssuer":"http://localhost:5000/api/",
+            "properties":{  
+
+            },
+            "subject":null,
+            "type":"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+            "value":"admin",
+            "valueType":"http://www.w3.org/2001/XMLSchema#string"
+         },
+         {  
+            "issuer":"http://localhost:5000/api/",
+            "originalIssuer":"http://localhost:5000/api/",
+            "properties":{  
+
+            },
+            "subject":null,
+            "type":"admins",
+            "value":"1",
+            "valueType":"http://www.w3.org/2001/XMLSchema#string"
+         },
+         {  
+            "issuer":"http://localhost:5000/api/",
+            "originalIssuer":"http://localhost:5000/api/",
+            "properties":{  
+
+            },
+            "subject":null,
+            "type":"superusers",
+            "value":"2",
+            "valueType":"http://www.w3.org/2001/XMLSchema#string"
+         },
+         {  
+            "issuer":"http://localhost:5000/api/",
+            "originalIssuer":"http://localhost:5000/api/",
+            "properties":{  
+
+            },
+            "subject":null,
+            "type":"users",
+            "value":"3",
+            "valueType":"http://www.w3.org/2001/XMLSchema#string"
+         },
+         {  
+            "issuer":"http://localhost:5000/api/",
+            "originalIssuer":"http://localhost:5000/api/",
+            "properties":{  
+
+            },
+            "subject":null,
+            "type":"exp",
+            "value":"1504392381",
+            "valueType":"http://www.w3.org/2001/XMLSchema#integer"
+         },
+         {  
+            "issuer":"http://localhost:5000/api/",
+            "originalIssuer":"http://localhost:5000/api/",
+            "properties":{  
+
+            },
+            "subject":null,
+            "type":"iss",
+            "value":"http://localhost:5000/api/",
+            "valueType":"http://www.w3.org/2001/XMLSchema#string"
+         },
+         {  
+            "issuer":"http://localhost:5000/api/",
+            "originalIssuer":"http://localhost:5000/api/",
+            "properties":{  
+
+            },
+            "subject":null,
+            "type":"aud",
+            "value":"http://localhost:5000/api/",
+            "valueType":"http://www.w3.org/2001/XMLSchema#string"
+         }
+      ],
+      "encodedHeader":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+      "encodedPayload":"eyJzdWIiOiJhZG1pbkBkb21haW4iLCJqdGkiOiJmODU4MTVhZS02OWM0LTRmZWMtODU1My1iYzExOTllM2NkY2UiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJhZG1pbnMiOiIxIiwic3VwZXJ1c2VycyI6IjIiLCJ1c2VycyI6IjMiLCJleHAiOjE1MDQzOTIzODEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwL2FwaS8ifQ",
+      "header":{  
+         "alg":"HS256",
+         "typ":"JWT"
+      },
+      "id":"f85815ae-69c4-4fec-8553-bc1199e3cdce",
+      "issuer":"http://localhost:5000/api/",
+      "payload":{  
+         "sub":"admin@domain",
+         "jti":"f85815ae-69c4-4fec-8553-bc1199e3cdce",
+         "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name":"admin",
+         "admins":"1",
+         "superusers":"2",
+         "users":"3",
+         "exp":1504392381,
+         "iss":"http://localhost:5000/api/",
+         "aud":"http://localhost:5000/api/"
+      },
+      "innerToken":null,
+      "rawAuthenticationTag":null,
+      "rawCiphertext":null,
+      "rawData":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBkb21haW4iLCJqdGkiOiJmODU4MTVhZS02OWM0LTRmZWMtODU1My1iYzExOTllM2NkY2UiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJhZG1pbnMiOiIxIiwic3VwZXJ1c2VycyI6IjIiLCJ1c2VycyI6IjMiLCJleHAiOjE1MDQzOTIzODEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwL2FwaS8ifQ.AXpvgAE3ZFN8EnRVSkLUt0iCaFTySFnMTfSx_kWYFDk",
+      "rawEncryptedKey":null,
+      "rawInitializationVector":null,
+      "rawHeader":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+      "rawPayload":"eyJzdWIiOiJhZG1pbkBkb21haW4iLCJqdGkiOiJmODU4MTVhZS02OWM0LTRmZWMtODU1My1iYzExOTllM2NkY2UiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJhZG1pbnMiOiIxIiwic3VwZXJ1c2VycyI6IjIiLCJ1c2VycyI6IjMiLCJleHAiOjE1MDQzOTIzODEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9hcGkvIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDAwL2FwaS8ifQ",
+      "rawSignature":"AXpvgAE3ZFN8EnRVSkLUt0iCaFTySFnMTfSx_kWYFDk",
+      "securityKey":null,
+      "signatureAlgorithm":"HS256",
+      "signingCredentials":null,
+      "encryptingCredentials":null,
+      "signingKey":null,
+      "subject":"admin@domain",
+      "validFrom":"0001-01-01T00:00:00",
+      "validTo":"2017-09-02T22:46:21Z"
+   }
+}
 ```
 
 #### Cookies and JWT
