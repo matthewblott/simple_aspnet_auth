@@ -73,7 +73,7 @@ namespace simple_aspnet_auth
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public IActionResult TokenInfo()
     {
-      var authorization = Request.Headers["Authorization"].ToString();
+      var authorization = this.Request.Headers["Authorization"].ToString();
       var tokenstring = authorization.Substring("Bearer ".Length).Trim();
       var handler = new JwtSecurityTokenHandler();
       var token = handler.ReadJwtToken(tokenstring);

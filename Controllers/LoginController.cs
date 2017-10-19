@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -52,9 +53,25 @@ namespace simple_aspnet_auth
         new Claim(ClaimTypes.Name, user.Name),
       };
 
-      foreach (var group in user.Groups)
+      var groups = user.Groups;
+
+      foreach (var group in groups)
       {
         claims.Add(new Claim(group.Name, group.Id.ToString()));
+      }
+
+      var isAdmin = groups.Any(x => x.Name == GroupNames.Admins);
+
+      if(isAdmin)
+      {
+        claims.Add(new Claim(ClaimTypes.Role, GroupNames.Admins));
+      }
+
+      var isSuperUser = groups.Any(x => x.Name == GroupNames.SuperUsers);
+
+      if(isSuperUser)
+      {
+        claims.Add(new Claim(ClaimTypes.Role, GroupNames.SuperUsers));
       }
 
       var props = new AuthenticationProperties
@@ -132,6 +149,36 @@ namespace simple_aspnet_auth
     {
       // todo
       return Ok();
+    }
+
+    [HttpGet]
+    [Route("~/api/userinfo")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public IActionResult ApiUserInfo()
+    {
+      var authorization = this.Request.Headers["Authorization"].ToString();
+      var tokenstring = authorization.Substring("Bearer ".Length).Trim();
+      var handler = new JwtSecurityTokenHandler();
+      var token = handler.ReadJwtToken(tokenstring);
+      var claims =  token.Claims;
+      var q = from x in claims where x.Type == ClaimTypes.Name select x;
+      var name = q.FirstOrDefault().Value;
+      var user = this.userService.GetByName(name);
+
+      return Json(user);
+
+    }
+
+    [HttpGet]
+    [Route("~/userinfo")]
+    [Authorize(AuthenticationSchemes=CookieAuthenticationDefaults.AuthenticationScheme, Roles=GroupNames.SuperUsers)]
+    public IActionResult UserInfo()
+    {
+      var name = this.User.Identity.Name;
+      var user = this.userService.GetByName(name);
+
+      return Json(user);
+
     }
 
   }

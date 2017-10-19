@@ -16,8 +16,11 @@ dotnet run
 
 The app simulates a basic group based admin system. There are three groups users can be members of: ```users```, ```superusers``` and ```admins```. All users are members of the ```users``` group but not all are members of ```superusers``` and or ```admins``` and there are parts of the app that use the ```Authorize``` attribute with policy based access to filter access.
 
-There are a series of logins to test out. The home page has a table of the available users and passwords and indicates if a user is a member of ```superusers``` and / or ```admins```. You can then run the series of tests below and see which sections you are able to view dependent upon login. All the tests make calls to the ```ExampleController``` class.
+There are a series of logins to test out. The home page has a table of the available users and passwords and indicates if a user is a member of ```superusers``` and / or ```admins```.
 
+![](docs/images/logins.jpg)
+
+You can then run the series of tests below and see which sections you are able to view dependent upon login. All the tests make calls to the ```ExampleController``` class.
 
 #### Cookies
 
