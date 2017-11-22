@@ -84,8 +84,8 @@ namespace simple_aspnet_auth
           {
             new Group
             {
-              Id = 1,
-              Name = GroupNames.Admins
+              Id = 3,
+              Name = GroupNames.Users
             },
 
           }
