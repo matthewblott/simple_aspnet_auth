@@ -34,7 +34,6 @@ namespace simple_aspnet_auth
       services.AddScoped<IUserService, UserService>();
       services.AddOptions();
       services.Configure<JwtSettings>(configSection);
-
       services.AddMvc();
       services.AddAuthentication(options =>
       {
@@ -72,7 +71,6 @@ namespace simple_aspnet_auth
       app.UseAuthentication();
       app.UseStaticFiles();
       app.UseMvc();
-      // app.UseMvcWithDefaultRoute();
 
     }
 

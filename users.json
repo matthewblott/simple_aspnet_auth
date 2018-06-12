@@ -43,11 +43,19 @@
     ]
   },
   {
+    "Id": 5,
+    "Name": "matt",
+    "Email": null,
+    "Password": "password",
+    "RefreshToken": "3P/YUhsNaCkMQkrt2WpuKl+1bJcHqXu85x4blHAB7VI=",
+    "Groups": null
+  },
+  {
     "Id": 1,
     "Name": "admin",
     "Email": "admin@domain",
     "Password": "password",
-    "RefreshToken": "NNc7dMXjoEaWsvInX7Y51O58NNn1LqmiT63TtpWOxVU=",
+    "RefreshToken": "qpOWBHU5ci+4QSU6QYb8/Epi4lggVtVBPWlH8r3fW2A=",
     "Groups": [
       {
         "Id": 1,
@@ -62,13 +70,5 @@
         "Name": "users"
       }
     ]
-  },
-  {
-    "Id": 5,
-    "Name": "matt",
-    "Email": null,
-    "Password": "password",
-    "RefreshToken": "K/gx4F9KrzGZeiE3D9ESy3DFz55BC3QRB6ZVDpQwhaA=",
-    "Groups": null
   }
 ]
