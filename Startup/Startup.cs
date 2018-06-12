@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Text;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -13,16 +12,14 @@ namespace simple_aspnet_auth
 {
   public class Startup
   {
-    public IConfiguration Configuration { get; }
+    public IConfiguration Configuration { get; set; }
 
     public Startup(IHostingEnvironment env)
     {
-      var builder = new ConfigurationBuilder()
+      Configuration = new ConfigurationBuilder()
         .SetBasePath(env.ContentRootPath)
-        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-      Configuration = builder.Build();
-
+        .AddJsonFile("appsettings.json")
+        .Build();
     }
 
     public void ConfigureServices(IServiceCollection services)
@@ -32,62 +29,54 @@ namespace simple_aspnet_auth
 
       configSection.Bind(jwtSettings);
 
-      services.AddAuthorization(options =>
-      {
-        options.AddPolicy(GroupNames.Admins, policy => { policy.Requirements.Add(new AdminRequirement()); });
-        options.AddPolicy(GroupNames.SuperUsers, policy => { policy.Requirements.Add(new AdminRequirement(true)); });
-      });
-      services.AddSingleton<IAuthorizationHandler, AdminHandler>();
+      services.AddSingleton<IConfiguration>(provider => Configuration);
+      services.AddTransient<ITokenService, TokenService>();
+      services.AddScoped<IUserService, UserService>();
       services.AddOptions();
       services.Configure<JwtSettings>(configSection);
-      services.AddScoped<IUserService, UserService>();
-      services.AddAuthentication(x =>
+
+      services.AddMvc();
+      services.AddAuthentication(options =>
       {
-        x.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        x.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        x.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-      })
-      .AddCookie(x =>
+        options.DefaultScheme = "bearer";
+      }).AddJwtBearer("bearer", options =>
       {
-        x.LoginPath = new PathString("/Home/Login/");
-        x.AccessDeniedPath = new PathString("/Shared/Error/");
-        x.SlidingExpiration = true;
-      }).AddJwtBearer(x =>
-      {
-        x.RequireHttpsMetadata = false;
-        x.SaveToken = true;
-        x.TokenValidationParameters = new TokenValidationParameters()
+        options.RequireHttpsMetadata = false;
+
+        // options.SaveToken = true;
+
+        options.TokenValidationParameters = new TokenValidationParameters
         {
           ValidIssuer = jwtSettings.Issuer,
           ValidAudience = jwtSettings.Audience,
           IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
-          ClockSkew = TimeSpan.Zero,
+          ValidateAudience = false,
+          ValidateIssuer = false,
+          ValidateIssuerSigningKey = true,
+          ValidateLifetime = true,
+          ClockSkew = TimeSpan.Zero // the default for this setting is 5 minutes
         };
-      });
-      services.AddMvc();
 
+        options.Events = new JwtBearerEvents
+        {
+          OnAuthenticationFailed = context =>
+          {
+            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+            {
+              context.Response.Headers.Add("Token-Expired", "true");
+            }
+            return Task.CompletedTask;
+          }
+        };
+
+      });
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app)
     {
-      if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
-      else
-      {
-        app.UseExceptionHandler("/Home/Error");
-      }
-
-      app.UseStaticFiles();
       app.UseAuthentication();
-
-      app.UseMvc(routes =>
-      {
-        routes.MapRoute(
-          name: "default",
-          template: "{controller=Home}/{action=Index}/{id?}");
-      });
+      app.UseStaticFiles();
+      app.UseMvcWithDefaultRoute();
 
     }
 

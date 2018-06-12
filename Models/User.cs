@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace simple_aspnet_auth
 {
@@ -8,6 +8,9 @@ namespace simple_aspnet_auth
     public string Name { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
-    public IList<Group> Groups { get; set; }
+    public string RefreshToken { get; set; }
+   public IList<Group> Groups { get; set; }
+
   }
+  
 }

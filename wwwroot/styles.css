@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+.container {
+    max-width: 80rem;
+    margin: auto;
+}
+
+.feedback {
+    margin: 5px 0;    
+    background: rgb(223, 220, 220);
+    font-size: large;
+    font-weight: bold;
+}
+
+fieldset {
+    margin: 30px 0;
+    padding: 20px;
+}
+
+button {
+    background: rgb(54, 107, 33);
+    border: 0;
+    padding: 10px;
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+}
+button:active {
+    transform: translate(1px, 1px);
+}
+
