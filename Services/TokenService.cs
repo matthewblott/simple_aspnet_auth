@@ -4,7 +4,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
 
@@ -12,20 +11,17 @@ namespace simple_aspnet_auth
 {
   public class TokenService : ITokenService
   {
-    JwtSettings jwtSettings;
+    JwtSettings settings;
 
-    public TokenService(IOptions<JwtSettings> settings)
-    {
-      this.jwtSettings = settings.Value;
-    }
-    
+    public TokenService(IOptions<JwtSettings> settings) => this.settings = settings.Value;
+
     public string GenerateAccessToken(IEnumerable<Claim> claims)
     {
-      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
+      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.Key));
 
       var token = new JwtSecurityToken(
-        issuer: jwtSettings.Issuer,
-        audience: jwtSettings.Audience,
+        issuer: settings.Issuer,
+        audience: settings.Audience,
         claims: claims,
         notBefore: DateTime.UtcNow,
         expires: DateTime.UtcNow.AddMinutes(5),
@@ -38,17 +34,20 @@ namespace simple_aspnet_auth
 
     public string GenerateRefreshToken()
     {
-      var randomNumber = new byte[32];
-      using (var rng = RandomNumberGenerator.Create())
+      var number = new byte[32];
+
+      using (var generator = RandomNumberGenerator.Create())
       {
-        rng.GetBytes(randomNumber);
-        return Convert.ToBase64String(randomNumber);
+        generator.GetBytes(number);
+
+        return Convert.ToBase64String(number);
       }
+
     }
 
     public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
     {
-      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
+      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.Key));
 
       var tokenValidationParameters = new TokenValidationParameters
       {
@@ -56,7 +55,7 @@ namespace simple_aspnet_auth
         ValidateIssuer = false,
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = key,
-        ValidateLifetime = false
+        ValidateLifetime = false,
       };
 
       var handler = new JwtSecurityTokenHandler();

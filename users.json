@@ -47,7 +47,7 @@
     "Name": "admin",
     "Email": "admin@domain",
     "Password": "password",
-    "RefreshToken": "imRJbU7B/ahQp5Uho+01W0nAvzCmd2w00H0Zhjwz6LE=",
+    "RefreshToken": "NNc7dMXjoEaWsvInX7Y51O58NNn1LqmiT63TtpWOxVU=",
     "Groups": [
       {
         "Id": 1,
@@ -68,7 +68,7 @@
     "Name": "matt",
     "Email": null,
     "Password": "password",
-    "RefreshToken": "PdLQ0aEJFUoO/cO1FA2LuMphvCnmfF8ToYG6ob0xIoM=",
+    "RefreshToken": "K/gx4F9KrzGZeiE3D9ESy3DFz55BC3QRB6ZVDpQwhaA=",
     "Groups": null
   }
 ]

@@ -25,9 +25,9 @@ namespace simple_aspnet_auth
     public void ConfigureServices(IServiceCollection services)
     {
       var configSection = Configuration.GetSection(nameof(JwtSettings));
-      var jwtSettings = new JwtSettings();
+      var settings = new JwtSettings();
 
-      configSection.Bind(jwtSettings);
+      configSection.Bind(settings);
 
       services.AddSingleton<IConfiguration>(provider => Configuration);
       services.AddTransient<ITokenService, TokenService>();
@@ -38,32 +38,27 @@ namespace simple_aspnet_auth
       services.AddMvc();
       services.AddAuthentication(options =>
       {
-        options.DefaultScheme = "bearer";
-      }).AddJwtBearer("bearer", options =>
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+      }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
       {
         options.RequireHttpsMetadata = false;
-
-        // options.SaveToken = true;
-
+        options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
-          ValidIssuer = jwtSettings.Issuer,
-          ValidAudience = jwtSettings.Audience,
-          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
-          ValidateAudience = false,
-          ValidateIssuer = false,
+          ValidIssuer = settings.Issuer,
+          ValidAudience = settings.Audience,
+          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.Key)),
           ValidateIssuerSigningKey = true,
           ValidateLifetime = true,
           ClockSkew = TimeSpan.Zero // the default for this setting is 5 minutes
         };
-
         options.Events = new JwtBearerEvents
         {
           OnAuthenticationFailed = context =>
           {
             if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
             {
-              context.Response.Headers.Add("Token-Expired", "true");
+              context.Response.Headers.Add("Token-Expired", true.ToString().ToLower());
             }
             return Task.CompletedTask;
           }
@@ -76,7 +71,8 @@ namespace simple_aspnet_auth
     {
       app.UseAuthentication();
       app.UseStaticFiles();
-      app.UseMvcWithDefaultRoute();
+      app.UseMvc();
+      // app.UseMvcWithDefaultRoute();
 
     }
 

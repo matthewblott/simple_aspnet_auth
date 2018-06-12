@@ -15,17 +15,17 @@ namespace simple_aspnet_auth
 
     [HttpPost]
     [Route("~/api/signup")]
-    public IActionResult Signup(string name, string password)
+    public IActionResult Signup(User userViewModel)
     {
-      var user = this.userService.GetByName(name);
+      var user = this.userService.GetByName(userViewModel.Name);
 
       if (user != null)
         return StatusCode(409);
 
       this.userService.Add(new User
       {
-        Name = name,
-        Password = password
+        Name = userViewModel.Name,
+        Password = userViewModel.Password
       });
 
       return Ok(user);
@@ -33,17 +33,18 @@ namespace simple_aspnet_auth
 
     [HttpPost]
     [Route("~/api/login")]
-    public IActionResult Login(string name, string password)
+    public IActionResult Login(User userViewModel)
     {
-      var user = this.userService.GetByName(name);
+      var user = this.userService.GetByName(userViewModel.Name);
 
-      if (user == null || password != user.Password)
+      if (user == null || userViewModel.Password != user.Password)
         return BadRequest();
 
       var claims = new[]
       {
         new Claim(ClaimTypes.Name, user.Name),
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        new Claim(ClaimTypes.Role, GroupNames.Admins)
       };
 
       var token = this.tokenService.GenerateAccessToken(claims);

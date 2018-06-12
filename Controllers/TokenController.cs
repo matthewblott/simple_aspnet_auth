@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,13 +18,13 @@ namespace simple_aspnet_auth
     public IActionResult Refresh(string token, string refreshToken)
     {
       var principal = this.tokenService.GetPrincipalFromExpiredToken(token);
-      var username = principal.Identity.Name;
-      var user = this.userService.GetByName(username);
+      var name = principal.Identity.Name;
+      var user = this.userService.GetByName(name);
 
       if (user == null || user.RefreshToken != refreshToken)
         return BadRequest();
 
-      var newJwtToken = tokenService.GenerateAccessToken(principal.Claims);
+      var newToken = tokenService.GenerateAccessToken(principal.Claims);
       var newRefreshToken = tokenService.GenerateRefreshToken();
 
       user.RefreshToken = newRefreshToken;
@@ -32,7 +33,7 @@ namespace simple_aspnet_auth
 
       return new ObjectResult(new
       {
-        token = newJwtToken,
+        token = newToken,
         refreshToken = newRefreshToken
       });
       
