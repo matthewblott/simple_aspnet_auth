@@ -24,7 +24,7 @@ namespace simple_aspnet_auth
         audience: settings.Audience,
         claims: claims,
         notBefore: DateTime.UtcNow,
-        expires: DateTime.UtcNow.AddMinutes(5),
+        expires: DateTime.UtcNow.AddMinutes(settings.AccessTokenDurationInMinutes),
         signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
       );
 

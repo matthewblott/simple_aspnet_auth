@@ -7,13 +7,14 @@ namespace simple_aspnet_auth
   {
     ITokenService tokenService;
     IUserService userService;
+    
     public TokenController(ITokenService tokenService, IUserService userService)
     {
       this.tokenService = tokenService;
       this.userService = userService;
     }
 
-    [HttpPost("~/token/refresh")]
+    [HttpPost("~/api/token/refresh")]
     public IActionResult Refresh(string token, string refreshToken)
     {
       var principal = this.tokenService.GetPrincipalFromExpiredToken(token);
@@ -39,7 +40,7 @@ namespace simple_aspnet_auth
     }
 
     [Authorize]
-    [HttpPost("~/token/revoke")]
+    [HttpPost("~/api/token/revoke")]
     public IActionResult Revoke()
     {
       var username = User.Identity.Name;

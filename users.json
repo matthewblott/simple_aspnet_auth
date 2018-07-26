@@ -2,7 +2,6 @@
   {
     "Id": 2,
     "Name": "superuser",
-    "Email": "superuser@domain",
     "Password": "password",
     "RefreshToken": null,
     "Groups": [
@@ -19,7 +18,6 @@
   {
     "Id": 3,
     "Name": "john",
-    "Email": "john@domain",
     "Password": "password",
     "RefreshToken": null,
     "Groups": [
@@ -32,7 +30,6 @@
   {
     "Id": 4,
     "Name": "jane",
-    "Email": "jane@domain",
     "Password": "password",
     "RefreshToken": null,
     "Groups": [
@@ -43,27 +40,10 @@
     ]
   },
   {
-    "Id": 5,
-    "Name": "matt",
-    "Email": null,
-    "Password": "password",
-    "RefreshToken": "3P/YUhsNaCkMQkrt2WpuKl+1bJcHqXu85x4blHAB7VI=",
-    "Groups": null
-  },
-  {
-    "Id": 6,
-    "Name": null,
-    "Email": null,
-    "Password": null,
-    "RefreshToken": null,
-    "Groups": null
-  },
-  {
     "Id": 1,
     "Name": "admin",
-    "Email": "admin@domain",
     "Password": "password",
-    "RefreshToken": null,
+    "RefreshToken": "5qT1XJNfWoQ8lk1jxLY5uM6Meqpt+QW0U9UgE30XjPM=",
     "Groups": [
       {
         "Id": 1,

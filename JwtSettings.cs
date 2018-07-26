@@ -5,6 +5,6 @@ namespace simple_aspnet_auth
     public string Key { get; set; }
     public string Issuer { get; set; }
     public string Audience { get; set; }
-    public string AccessTokenDurationInMinutes {get; set; }
+    public int AccessTokenDurationInMinutes { get; set; }
   }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -69,10 +70,12 @@ namespace simple_aspnet_auth
     public void Configure(IApplicationBuilder app)
     {
       app.UseAuthentication();
-      app.UseStaticFiles();
       app.UseMvc();
 
     }
+
+    public static void Main(string[] args) =>
+      WebHost.CreateDefaultBuilder(args).UseStartup<Startup>().Build().Run();
 
   }
 
