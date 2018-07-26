@@ -1,5 +1,25 @@
 [
   {
+    "Id": 1,
+    "Name": "admin",
+    "Password": "password",
+    "RefreshToken": null,
+    "Groups": [
+      {
+        "Id": 1,
+        "Name": "admins"
+      },
+      {
+        "Id": 2,
+        "Name": "superusers"
+      },
+      {
+        "Id": 3,
+        "Name": "users"
+      }
+    ]
+  },
+  {
     "Id": 2,
     "Name": "superuser",
     "Password": "password",
@@ -33,26 +53,6 @@
     "Password": "password",
     "RefreshToken": null,
     "Groups": [
-      {
-        "Id": 3,
-        "Name": "users"
-      }
-    ]
-  },
-  {
-    "Id": 1,
-    "Name": "admin",
-    "Password": "password",
-    "RefreshToken": "5qT1XJNfWoQ8lk1jxLY5uM6Meqpt+QW0U9UgE30XjPM=",
-    "Groups": [
-      {
-        "Id": 1,
-        "Name": "admins"
-      },
-      {
-        "Id": 2,
-        "Name": "superusers"
-      },
       {
         "Id": 3,
         "Name": "users"
