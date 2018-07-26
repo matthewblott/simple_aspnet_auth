@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +13,7 @@ namespace simple_aspnet_auth
       this.userService = userService;
     }
 
-    [HttpPost]
+    [HttpPost("~/token/refresh")]
     public IActionResult Refresh(string token, string refreshToken)
     {
       var principal = this.tokenService.GetPrincipalFromExpiredToken(token);
@@ -39,8 +38,8 @@ namespace simple_aspnet_auth
       
     }
 
-    [HttpPost]
     [Authorize]
+    [HttpPost("~/token/revoke")]
     public IActionResult Revoke()
     {
       var username = User.Identity.Name;

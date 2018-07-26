@@ -51,11 +51,19 @@
     "Groups": null
   },
   {
+    "Id": 6,
+    "Name": null,
+    "Email": null,
+    "Password": null,
+    "RefreshToken": null,
+    "Groups": null
+  },
+  {
     "Id": 1,
     "Name": "admin",
     "Email": "admin@domain",
     "Password": "password",
-    "RefreshToken": "qpOWBHU5ci+4QSU6QYb8/Epi4lggVtVBPWlH8r3fW2A=",
+    "RefreshToken": null,
     "Groups": [
       {
         "Id": 1,

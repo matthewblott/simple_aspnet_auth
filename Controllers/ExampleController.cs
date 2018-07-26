@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,11 +6,6 @@ namespace simple_aspnet_auth
 {
   public class ExampleController : Controller
   {
-    [Route("~/api/test")]
-    [Authorize(Roles = GroupNames.SuperUsers + "," + GroupNames.Admins)]
-    public IActionResult Test() =>
-      Content($"The user: {User.Identity.Name} made an authenticated call at {DateTime.Now.ToString("HH:mm:ss")}", "text/plain");
-
     [Route("~/api/auth")]
     [Authorize]
     public string ApiAuth() => "Only authenticated token based requests receive this message.";

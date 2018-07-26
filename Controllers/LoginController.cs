@@ -13,8 +13,7 @@ namespace simple_aspnet_auth
       this.userService = userService;
     }
 
-    [HttpPost]
-    [Route("~/api/signup")]
+    [HttpPost("~/api/signup")]
     public IActionResult Signup(User userViewModel)
     {
       var user = this.userService.GetByName(userViewModel.Name);
@@ -31,8 +30,7 @@ namespace simple_aspnet_auth
       return Ok(user);
     }
 
-    [HttpPost]
-    [Route("~/api/login")]
+    [HttpPost("~/api/login")]
     public IActionResult Login(User userViewModel)
     {
       var user = this.userService.GetByName(userViewModel.Name);
