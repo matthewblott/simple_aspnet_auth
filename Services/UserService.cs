@@ -31,7 +31,6 @@ namespace simple_aspnet_auth
         {
           Id = 1,
           Name = "admin",
-          Email = "admin@domain",
           Password = password,
           Groups = new List<Group>
           {
@@ -57,7 +56,6 @@ namespace simple_aspnet_auth
         {
           Id = 2,
           Name = "superuser",
-          Email = "superuser@domain",
           Password = password,
           Groups = new List<Group>
           {
@@ -78,7 +76,6 @@ namespace simple_aspnet_auth
         {
           Id = 3,
           Name = "john",
-          Email = "john@domain",
           Password = password,
           Groups = new List<Group>
           {
@@ -94,7 +91,6 @@ namespace simple_aspnet_auth
         {
           Id = 4,
           Name = "jane",
-          Email = "jane@domain",
           Password = password,
           Groups = new List<Group>
           {
