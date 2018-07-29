@@ -1,25 +1,14 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-  <title>@ViewData["Title"] - Simple AspNet Auth</title>
+  <title>Simple AspNet Auth</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <environment names="Development">
-    <link rel="stylesheet" href="~/styles/libs/bootstrap.css">
-    <link rel="stylesheet" href="~/styles/libs/tether-1.1.1.min.css">
-    <link rel="stylesheet" href="~/styles/libs/font-awesome-4.7.0/css/font-awesome.css">
-    <link rel="stylesheet" href="~/styles/site.css">
-  </environment>
-  <environment names="Staging,Production">
-    <link rel="stylesheet" href="~/styles/libs/bootstrap.min.css">
-    <link rel="stylesheet" href="~/styles/libs/tether-1.1.1.min.css">
-    <link rel="stylesheet" href="~/styles/libs/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/styles/site.min.css">
-  </environment>
-    
-  @RenderSection("Styles", required: false)
-
+  <link rel="stylesheet" href="~/styles/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="~/styles/libs/tether-1.1.1.min.css">
+  <link rel="stylesheet" href="~/styles/libs/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="~/styles/site.min.css">
 </head>
 <body>
 
@@ -31,17 +20,6 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="exCollapsingNavbar2">
-      <ul class="nav navbar-nav mr-auto">
-        <li class="nav-item mx-0">
-          <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About <span class="ml-2">|</span></a>
-        </li>
-        <li class="nav-item mx-0">
-          <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Faq">Faq <span class="ml-2">|</span></a>
-        </li>
-        <li class="nav-item mx-0">
-          <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact </a>
-        </li>
-      </ul>
 
       @Html.Partial("_Login")
 				
@@ -52,60 +30,11 @@
     @RenderBody()
   </div>
 
-  <div class="fixed-bottom">
-    <div class="row bg-dark pl-5 pt-3">
-      <div class="col-sm-3 navbar-dark">
-        <ul class="navbar-nav">
-          <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-        </ul>
-      </div>
-      <div class="col-sm-3 navbar-dark">
-        <ul class="navbar-nav">
-          <li>
-            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
-          </li>
-          <li>
-            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Faq">Faq</a>
-          </li>
-          <li>
-            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-sm-3 navbar-dark">
-        <ul class="navbar-nav">
-          <li>
-            <a href="https://www.facebook.com/" target="_blank" class="nav-link"><i class="fa fa-facebook-square"></i> Facebook</a>
-          </li>
-          <li>
-            <a href="https://twitter.com/" target="_blank" class="nav-link"><i class="fa fa-twitter-square"></i> Twitter</a>
-          </li>
-          <li>
-            <a href="https://www.youtube.com/" target="_blank" class="nav-link"><i class="fa fa-youtube-square"></i> YouTube</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-sm-3">
-      </div>
-    </div>
-  </div>
-
-  <environment names="Development">
-    <script src="~/scripts/libs/jquery-3.2.1.js"></script>
-    <script src="~/scripts/libs/tether-1.1.1.min.js"></script>
-    <script src="~/scripts/libs/popper.js"></script>
-    <script src="~/scripts/libs/bootstrap.js"></script>
-    <script src="~/scripts/main.js"></script>    
-  </environment>
-  <environment names="Staging,Production">
-    <script src="~/scripts/libs/jquery-3.2.1.min.js"></script>
-    <script src="~/scripts/libs/tether-1.1.1.min.js"></script>
-    <script src="~/scripts/libs/popper.min.js"></script>
-    <script src="~/scripts/libs/bootstrap.min.js"></script>
-    <script src="~/scripts/main.min.js"></script>    
-  </environment>
-
-  @RenderSection("Scripts", required: false)
-		
+  <script src="~/scripts/libs/jquery-3.2.1.js"></script>
+  <script src="~/scripts/libs/tether-1.1.1.min.js"></script>
+  <script src="~/scripts/libs/popper.js"></script>
+  <script src="~/scripts/libs/bootstrap.js"></script>
+  <script src="~/scripts/main.js"></script>    
+  
 </body>
 </html>

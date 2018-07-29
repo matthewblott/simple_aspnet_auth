@@ -1,15 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace simple_aspnet_auth
 {
   public class UserService : IUserService
   {
-    IList<User> users;
+    const string filename = "users.json";
+    IList<User> users = new List<User>();
 
     public UserService()
     {
-      this.CreateList();
+      if (File.Exists(filename))
+      {
+        var json = File.ReadAllText(filename);
+        this.users = JsonConvert.DeserializeObject<IList<User>>(json);
+      }
+
     }
 
     public User GetByName(string name)
@@ -21,89 +29,29 @@ namespace simple_aspnet_auth
 
     }
 
-    void CreateList()
+    public void Add(User user)
     {
-      const string password = "password";
+      user.Id = this.users.Count() + 1;
 
-      this.users = new List<User>
-      {
-        new User
-        {
-          Id = 1,
-          Name = "admin",
-          Password = password,
-          Groups = new List<Group>
-          {
-            new Group
-            {
-              Id = 1,
-              Name = GroupNames.Admins
-            },
-            new Group
-            {
-              Id = 2,
-              Name = GroupNames.SuperUsers
-            },
-            new Group
-            {
-              Id = 3,
-              Name = GroupNames.Users
-            },
+      this.users.Add(user);
 
-          }
-        },
-        new User
-        {
-          Id = 2,
-          Name = "superuser",
-          Password = password,
-          Groups = new List<Group>
-          {
-            new Group
-            {
-              Id = 2,
-              Name = GroupNames.SuperUsers
-            },
-            new Group
-            {
-              Id = 3,
-              Name = GroupNames.Users
-            },
+      this.SaveChanges();
 
-          }
-        },
-        new User
-        {
-          Id = 3,
-          Name = "john",
-          Password = password,
-          Groups = new List<Group>
-          {
-            new Group
-            {
-              Id = 3,
-              Name = GroupNames.Users
-            },
+    }
 
-          }
-        },
-        new User
-        {
-          Id = 4,
-          Name = "jane",
-          Password = password,
-          Groups = new List<Group>
-          {
-            new Group
-            {
-              Id = 3,
-              Name = GroupNames.Users
-            },
+    public void Update(User user)
+    {
+      this.users.Remove(this.GetByName(user.Name));
+      this.users.Add(user);
+      this.SaveChanges();
 
-          }
-        },
+    }
 
-      };
+    void SaveChanges()
+    {
+      var json = JsonConvert.SerializeObject(this.users, Formatting.Indented);
+
+      File.WriteAllText(filename, json);
 
     }
 
