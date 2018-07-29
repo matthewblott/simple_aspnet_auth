@@ -1,76 +1,42 @@
-﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace simple_aspnet_auth
 {
   public class ExampleController : Controller
   {
-    // Api and Cookie
-    [HttpGet]
-    [Route("~/auth")]
+    // All
     [Authorize]
-    public string All()
-    {
-      return "Only authenticated requests receive this message.";
-    }
+    [HttpGet("~/auth")]
+    public string All() =>  "Only authenticated requests receive this message.";
+
+    // Cookies
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = GroupNames.SuperUsers + "," + GroupNames.Admins)]
+    [HttpGet("~/superuser")]
+    public string CookieSuperUser() => "Only authenticated requests from superusers receive this message.";
+
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = GroupNames.Admins)]
+    [HttpGet("~/admin")]
+    public string CookieAdmin() => "Only authenticated requests from admins receive this message.";
 
     // Api
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("~/api/auth")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public string ApiAuth()
-    {
-      return "Only authenticated token based requests receive this message.";
-    }
+    public string ApiAuth() => "Only authenticated token based requests receive this message.";
 
-    [HttpGet]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = GroupNames.SuperUsers + "," + GroupNames.Admins)]
     [Route("~/api/superuser")]
-    [Authorize(Policy = GroupNames.SuperUsers, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public string ApiSuperUser()
-    {
-      return "Only authenticated token based requests from superusers receive this message.";
-    }
+    public string ApiSuperUser() => "Only authenticated token based requests from superusers receive this message.";
 
-    [HttpGet]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = GroupNames.Admins)]
     [Route("~/api/admin")]
-    [Authorize(Policy = GroupNames.Admins, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public string ApiAdmin()
-    {
-      return "Only authenticated token based requests from admins receive this message.";
-    }
+    public string ApiAdmin() => "Only authenticated token based requests from admins receive this message.";
 
-    // Cookie
-    [HttpGet]
-    [Route("~/cookie/auth")]
-    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
-    public string CookieAuth()
-    {
-      return "Only authenticated cookie based requests from superusers receive this message.";
-    }
-
-    [HttpGet]
-    [Route("~/cookie/superuser")]
-    [Authorize(Policy = GroupNames.SuperUsers, AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
-    public string CookieSuperUser()
-    {
-      return "Only authenticated cookie based requests from superusers receive this message.";
-    }
-
-    [HttpGet]
-    [Route("~/cookie/admin")]
-    [Authorize(Policy = GroupNames.Admins, AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
-    public string CookieAdmin()
-    {
-      return "Only authenticated cookie based requests from admins receive this message.";
-    }
-
-    // Other examples
-    [HttpGet]
-    [Route("~/api/tokeninfo")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Route("~/api/tokeninfo")]
     public IActionResult TokenInfo()
     {
       var authorization = this.Request.Headers["Authorization"].ToString();
