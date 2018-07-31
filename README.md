@@ -7,7 +7,7 @@ Simple ASP.NET Authorisation boilerplate project. No EF, no database, no Identit
 To get up and running just ```cd``` to the root where the ```.csproj``` file resides and run the following commands.
 
 ```
-dotnet restore
+cd examples/cookies+api
 dotnet run
 
 ```
@@ -24,19 +24,19 @@ You can then run the series of tests below and see which sections you are able t
 
 #### Cookies
 
-Browse to ```http://localhost/cookie/auth``` and if you are logged in under any user you should see the following. 
+Browse to ```http://localhost/auth``` and if you are logged in under any user you should see the following. 
 
 ```
 Only authenticated cookie based requests from superusers receive this message.
 ```
 
-Browse to ```http://localhost/cookie/superuser``` and if you are logged in under a user in either ```superusers``` or ```admins``` you should see the following.
+Browse to ```http://localhost/superuser``` and if you are logged in under a user in either ```superusers``` or ```admins``` you should see the following.
 
 ```
 Only authenticated cookie based requests from superusers receive this message.
 ```
 
-Browse to ```http://localhost/cookie/admin``` and if you are logged in under a user in ```admins``` you should see the following.
+Browse to ```http://localhost/admin``` and if you are logged in under a user in ```admins``` you should see the following.
 
 ```
 Only authenticated cookie based requests from admins receive this message.

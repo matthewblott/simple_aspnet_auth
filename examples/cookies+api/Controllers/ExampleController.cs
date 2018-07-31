@@ -11,7 +11,7 @@ namespace simple_aspnet_auth
     // All
     [Authorize]
     [HttpGet("~/auth")]
-    public string All() =>  "Only authenticated requests receive this message.";
+    public string All() => "Only authenticated requests receive this message.";
 
     // Cookies
     [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme, Roles = GroupNames.SuperUsers + "," + GroupNames.Admins)]
