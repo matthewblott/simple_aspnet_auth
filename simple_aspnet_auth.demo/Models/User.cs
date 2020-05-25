@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace simple_aspnet_auth
+namespace simple_aspnet_auth.demo
 {
   public class User
   {

@@ -12,7 +12,9 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark pl-4 pt-3 pb-3">
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark pl-4 pt-3 pb-3">
     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
       Simple AspNet Auth
     </a>
@@ -30,7 +32,10 @@
     @RenderBody()
   </div>
 
-  <script src="~/scripts/libs/jquery-3.2.1.min.js"></script>
+  <vc:login></vc:login>
+
+
+<script src="~/scripts/libs/jquery-3.2.1.min.js"></script>
   <script src="~/scripts/libs/tether-1.1.1.min.js"></script>
   <script src="~/scripts/libs/popper.min.js"></script>
   <script src="~/scripts/libs/bootstrap.min.js"></script>

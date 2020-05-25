@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 
-namespace simple_aspnet_auth
+namespace simple_aspnet_auth.demo
 {
   public class LoginController : Controller
   {
-    IUserService userService;
+    private readonly IUserService _userService;
 
-    public LoginController(IUserService userService) => this.userService = userService;
+    public LoginController(IUserService userService) => _userService = userService;
 
     [AllowAnonymous]
     [HttpGet("~/login")]
@@ -24,9 +24,9 @@ namespace simple_aspnet_auth
     [HttpPost("~/login")]
     public async Task<IActionResult> Login(User userViewModel)
     {
-      var returnUrl = "/";
+      const string returnUrl = "/";
 
-      var user = this.userService.GetByName(userViewModel.Name);
+      var user = _userService.GetByName(userViewModel.Name);
 
       if (user.Password != userViewModel.Password)
         return LocalRedirect(returnUrl);
@@ -56,7 +56,7 @@ namespace simple_aspnet_auth
       var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
       var principal = new ClaimsPrincipal(identity);
 
-      await this.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
+      await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
 
       return LocalRedirect(returnUrl);
 
@@ -65,9 +65,9 @@ namespace simple_aspnet_auth
     [HttpPost("~/logout")]
     public IActionResult Logout()
     {
-      this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+      HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-      var returnUrl = "/";
+      const string returnUrl = "/";
 
       return LocalRedirect(returnUrl);
 

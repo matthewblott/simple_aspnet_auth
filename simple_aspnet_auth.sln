@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_aspnet_auth", "simple_aspnet_auth\simple_aspnet_auth.csproj", "{F7266937-E5E3-40E4-B63C-F8E71E4CE018}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_aspnet_auth.demo", "simple_aspnet_auth.demo\simple_aspnet_auth.demo.csproj", "{F7266937-E5E3-40E4-B63C-F8E71E4CE018}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_aspnet_auth.lib", "simple_aspnet_auth.lib\simple_aspnet_auth.lib.csproj", "{5379C68F-97A0-4E03-BA1C-5A8BAB41CB06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_aspnet_auth", "simple_aspnet_auth\simple_aspnet_auth.csproj", "{5379C68F-97A0-4E03-BA1C-5A8BAB41CB06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

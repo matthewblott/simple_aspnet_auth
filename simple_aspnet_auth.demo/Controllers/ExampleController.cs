@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-namespace simple_aspnet_auth
+namespace simple_aspnet_auth.demo
 {
   public class ExampleController : Controller
   {

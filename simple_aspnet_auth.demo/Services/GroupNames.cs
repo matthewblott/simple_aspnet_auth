@@ -1,4 +1,4 @@
-﻿namespace simple_aspnet_auth
+﻿namespace simple_aspnet_auth.demo
 {
   public struct GroupNames
   {
