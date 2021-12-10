@@ -15,7 +15,7 @@ namespace simple_aspnet_auth
   {
     public IConfiguration Configuration { get; set; }
 
-    public Startup(IHostingEnvironment env)
+    public Startup(Microsoft.AspNetCore.Hosting.IWebHostEnvironment env)
     {
       Configuration = new ConfigurationBuilder()
         .SetBasePath(env.ContentRootPath)
@@ -69,9 +69,13 @@ namespace simple_aspnet_auth
 
     public void Configure(IApplicationBuilder app)
     {
+      app.UseRouting();
       app.UseAuthentication();
-      app.UseMvc();
-
+      app.UseAuthorization();
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
+      });
     }
 
     public static void Main(string[] args) =>

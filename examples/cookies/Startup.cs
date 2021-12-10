@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace simple_aspnet_auth
 {
@@ -20,8 +18,14 @@ namespace simple_aspnet_auth
     {
       app.UseDeveloperExceptionPage();
       app.UseStaticFiles();
+      app.UseRouting();
       app.UseAuthentication();
-      app.UseMvcWithDefaultRoute();
+      app.UseAuthorization();
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
+      });
+
     }
 
     public static void Main(string[] args) =>
