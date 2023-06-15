@@ -3,7 +3,6 @@
     "Id": 1,
     "Name": "admin",
     "Password": "password",
-    "RefreshToken": null,
     "Groups": [
       {
         "Id": 1,
@@ -23,7 +22,6 @@
     "Id": 2,
     "Name": "superuser",
     "Password": "password",
-    "RefreshToken": null,
     "Groups": [
       {
         "Id": 2,
@@ -39,7 +37,6 @@
     "Id": 3,
     "Name": "john",
     "Password": "password",
-    "RefreshToken": null,
     "Groups": [
       {
         "Id": 3,
@@ -51,7 +48,6 @@
     "Id": 4,
     "Name": "jane",
     "Password": "password",
-    "RefreshToken": null,
     "Groups": [
       {
         "Id": 3,
