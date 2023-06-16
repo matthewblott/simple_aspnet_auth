@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple AspNet Auth</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <link rel="stylesheet" href="/css/pico.slim.min.css" />
+  <!-- <link rel="stylesheet" href="/css/pico.min.css" /> -->
+  <style>
+    nav,
+    form {
+      display: flex;
+      gap: 5px;
+      align-items: baseline;
+    }
+
+    input,
+    button {
+      width: inherit !important;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a href="/"> Simple AspNet Auth </a>
+    <form method="post" action="/login">
+      <input name="Name" placeholder="name" required />
+      <input type="password" name="Password" placeholder="password" required />
+      <button>Login</button>
+    </form>
+  </nav>
+
+  <div>
+    <table class="table" cellspacing="0" style="border-collapse: collapse">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Password</th>
+        <th scope="col">Admin</th>
+        <th scope="col">Super User</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>admin</td>
+        <td>password</td>
+        <td>
+          <i class="fa fa-check text-success"></i>
+        </td>
+        <td>
+          <i class="fa fa-check text-success"></i>
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>superuser</td>
+        <td>password</td>
+        <td>
+          <i class="fa fa-times text-danger"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-x">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </td>
+        <td>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-check">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+
+          <i class="fa fa-check text-success"></i>
+        </td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>john</td>
+        <td>password</td>
+        <td>
+          <i class="fa fa-times text-danger"></i>
+        </td>
+        <td>
+          <i class="fa fa-times text-danger"></i>
+        </td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>jane</td>
+        <td>password</td>
+        <td>
+          <i class="fa fa-times text-danger"></i>
+        </td>
+        <td>
+          <i class="fa fa-times text-danger"></i>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>
