@@ -1,0 +1,16 @@
+:root {
+    --form-element-spacing-vertical: 0.4rem;
+}
+
+nav,
+form {
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
+    padding: 5px;
+}
+
+input,
+button {
+    width: inherit !important;
+}

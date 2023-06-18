@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_aspnet_auth", "api\simple_aspnet_auth.csproj", "{5F2AE9B7-D466-4D4B-9F68-6BB17055B10F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_aspnet_auth", "cookies\simple_aspnet_auth.csproj", "{C10A249C-77AA-4BCD-9FE9-55244BA550A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_aspnet_auth", "cookies+api\simple_aspnet_auth.csproj", "{DAE6C4FF-E99F-4366-B415-07212DEC0B23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_aspnet_auth", "cookies+api+policies\simple_aspnet_auth.csproj", "{958AFB76-AAED-4226-87E4-BDE9C6ACB6F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F2AE9B7-D466-4D4B-9F68-6BB17055B10F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F2AE9B7-D466-4D4B-9F68-6BB17055B10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F2AE9B7-D466-4D4B-9F68-6BB17055B10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F2AE9B7-D466-4D4B-9F68-6BB17055B10F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C10A249C-77AA-4BCD-9FE9-55244BA550A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C10A249C-77AA-4BCD-9FE9-55244BA550A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C10A249C-77AA-4BCD-9FE9-55244BA550A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C10A249C-77AA-4BCD-9FE9-55244BA550A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAE6C4FF-E99F-4366-B415-07212DEC0B23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAE6C4FF-E99F-4366-B415-07212DEC0B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAE6C4FF-E99F-4366-B415-07212DEC0B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAE6C4FF-E99F-4366-B415-07212DEC0B23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{958AFB76-AAED-4226-87E4-BDE9C6ACB6F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{958AFB76-AAED-4226-87E4-BDE9C6ACB6F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{958AFB76-AAED-4226-87E4-BDE9C6ACB6F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{958AFB76-AAED-4226-87E4-BDE9C6ACB6F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

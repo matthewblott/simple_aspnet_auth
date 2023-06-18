@@ -1,60 +1,51 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Newtonsoft.Json;
+﻿namespace simple_aspnet_auth;
 
-namespace simple_aspnet_auth
+using JsonSerializer = System.Text.Json.JsonSerializer;
+
+public class UserService : IUserService
 {
-  public class UserService : IUserService
+  private const string Filename = "users.json";
+  private readonly IList<User> _users = new List<User>();
+
+  public UserService()
   {
-    const string filename = "users.json";
-    IList<User> users = new List<User>();
-
-    public UserService()
+    if (!File.Exists(Filename))
     {
-      if (File.Exists(filename))
-      {
-        var json = File.ReadAllText(filename);
-        this.users = JsonConvert.DeserializeObject<IList<User>>(json);
-      }
-
+      return;
     }
 
-    public User GetByName(string name)
-    {
-      var q = from x in this.users where x.Name == name select x;
-      var user = q.FirstOrDefault();
+    var json = File.ReadAllText(Filename);
 
-      return user;
-
-    }
-
-    public void Add(User user)
-    {
-      user.Id = this.users.Count() + 1;
-
-      this.users.Add(user);
-
-      this.SaveChanges();
-
-    }
-
-    public void Update(User user)
-    {
-      this.users.Remove(this.GetByName(user.Name));
-      this.users.Add(user);
-      this.SaveChanges();
-
-    }
-
-    void SaveChanges()
-    {
-      var json = JsonConvert.SerializeObject(this.users, Formatting.Indented);
-
-      File.WriteAllText(filename, json);
-
-    }
+    _users = JsonSerializer.Deserialize<IList<User>>(json);
 
   }
 
+  public User GetByName(string name) => _users.FirstOrDefault(u => u.Name == name);
+
+  public void Add(User user)
+  {
+    user.Id = _users.Count + 1;
+  
+    _users.Add(user);
+  
+    SaveChanges();
+  
+  }
+  
+  public void Update(User user)
+  {
+    _users.Remove(GetByName(user.Name));
+    _users.Add(user);
+    SaveChanges();
+  
+  }
+
+  private void SaveChanges()
+  {
+    var json = JsonSerializer.Serialize(_users);
+    
+    File.WriteAllText(Filename, json);
+  
+  }
+  
 }

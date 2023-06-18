@@ -3,57 +3,55 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace simple_aspnet_auth
+namespace simple_aspnet_auth;
+
+public class UserService : IUserService
 {
-  public class UserService : IUserService
+  private const string Filename = "users.json";
+  private readonly IList<User> _users = new List<User>();
+
+  public UserService()
   {
-    const string filename = "users.json";
-    IList<User> users = new List<User>();
-
-    public UserService()
+    if (File.Exists(Filename))
     {
-      if (File.Exists(filename))
-      {
-        var json = File.ReadAllText(filename);
-        this.users = JsonConvert.DeserializeObject<IList<User>>(json);
-      }
-
+      var json = File.ReadAllText(Filename);
+      this._users = JsonConvert.DeserializeObject<IList<User>>(json);
     }
 
-    public User GetByName(string name)
-    {
-      var q = from x in this.users where x.Name == name select x;
-      var user = q.FirstOrDefault();
+  }
 
-      return user;
+  public User GetByName(string name)
+  {
+    var q = from x in this._users where x.Name == name select x;
+    var user = q.FirstOrDefault();
 
-    }
+    return user;
 
-    public void Add(User user)
-    {
-      user.Id = this.users.Count() + 1;
+  }
 
-      this.users.Add(user);
+  public void Add(User user)
+  {
+    user.Id = this._users.Count() + 1;
 
-      this.SaveChanges();
+    this._users.Add(user);
 
-    }
+    this.SaveChanges();
 
-    public void Update(User user)
-    {
-      this.users.Remove(this.GetByName(user.Name));
-      this.users.Add(user);
-      this.SaveChanges();
+  }
 
-    }
+  public void Update(User user)
+  {
+    this._users.Remove(this.GetByName(user.Name));
+    this._users.Add(user);
+    this.SaveChanges();
 
-    void SaveChanges()
-    {
-      var json = JsonConvert.SerializeObject(this.users, Formatting.Indented);
+  }
 
-      File.WriteAllText(filename, json);
+  private void SaveChanges()
+  {
+    var json = JsonConvert.SerializeObject(this._users, Formatting.Indented);
 
-    }
+    File.WriteAllText(Filename, json);
 
   }
 

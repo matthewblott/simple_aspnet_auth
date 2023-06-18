@@ -8,123 +8,121 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 
-namespace simple_aspnet_auth
+namespace simple_aspnet_auth;
+
+public class LoginController : Controller
 {
-  public class LoginController : Controller
+  ITokenService tokenService;
+  IUserService userService;
+  public LoginController(ITokenService tokenService, IUserService userService)
   {
-    ITokenService tokenService;
-    IUserService userService;
-    public LoginController(ITokenService tokenService, IUserService userService)
-    {
-      this.tokenService = tokenService;
-      this.userService = userService;
-    }
+    this.tokenService = tokenService;
+    this.userService = userService;
+  }
 
-    // Cookies
-    [AllowAnonymous]
-    [HttpGet("~/login")]
-    public IActionResult Index() => View();
+  // Cookies
+  [AllowAnonymous]
+  [HttpGet("~/login")]
+  public IActionResult Index() => View("_Login");
 
-    [AllowAnonymous]
-    [HttpPost("~/login")]
-    public async Task<IActionResult> Login(User userViewModel)
-    {
-      var returnUrl = "/";
+  [AllowAnonymous]
+  [HttpPost("~/login")]
+  public async Task<IActionResult> Login(User userViewModel)
+  {
+    const string returnUrl = "/";
 
-      var user = this.userService.GetByName(userViewModel.Name);
+    var user = this.userService.GetByName(userViewModel.Name);
 
-      if (user.Password != userViewModel.Password)
-        return LocalRedirect(returnUrl);
-
-      var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Name) };
-      var groups = user.Groups;
-
-      foreach (var group in groups)
-        claims.Add(new Claim(group.Name, group.Id.ToString()));
-
-      var isAdmin = groups.Any(_ => _.Name == GroupNames.Admins);
-
-      if(isAdmin)
-        claims.Add(new Claim(ClaimTypes.Role, GroupNames.Admins));
-
-      var isSuperUser = groups.Any(_ => _.Name == GroupNames.SuperUsers);
-
-      if(isSuperUser)
-        claims.Add(new Claim(ClaimTypes.Role, GroupNames.SuperUsers));
-
-      var props = new AuthenticationProperties
-      {
-        IsPersistent = true,
-        ExpiresUtc = DateTime.UtcNow.AddMinutes(5),
-      };
-
-      var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-      var principal = new ClaimsPrincipal(identity);
-
-      await this.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
-
+    if (user.Password != userViewModel.Password)
       return LocalRedirect(returnUrl);
 
-    }
+    var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Name) };
+    var groups = user.Groups;
 
-    [HttpPost("~/logout")]
-    public IActionResult Logout()
+    foreach (var group in groups)
+      claims.Add(new Claim(group.Name, group.Id.ToString()));
+
+    var isAdmin = groups.Any(_ => _.Name == GroupNames.Admins);
+
+    if(isAdmin)
+      claims.Add(new Claim(ClaimTypes.Role, GroupNames.Admins));
+
+    var isSuperUser = groups.Any(_ => _.Name == GroupNames.SuperUsers);
+
+    if(isSuperUser)
+      claims.Add(new Claim(ClaimTypes.Role, GroupNames.SuperUsers));
+
+    var props = new AuthenticationProperties
     {
-      this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+      IsPersistent = true,
+      ExpiresUtc = DateTime.UtcNow.AddMinutes(5),
+    };
 
-      var returnUrl = "/";
+    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+    var principal = new ClaimsPrincipal(identity);
 
-      return LocalRedirect(returnUrl);
+    await this.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props);
 
-    }
+    return LocalRedirect(returnUrl);
 
-    // Api
-    [HttpPost("~/api/signup")]
-    public IActionResult ApiSignup(User userViewModel)
+  }
+
+  [HttpPost("~/logout")]
+  public IActionResult Logout()
+  {
+    this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+    var returnUrl = "/";
+
+    return LocalRedirect(returnUrl);
+
+  }
+
+  // Api
+  [HttpPost("~/api/signup")]
+  public IActionResult ApiSignup(User userViewModel)
+  {
+    var user = this.userService.GetByName(userViewModel.Name);
+
+    if (user != null)
+      return StatusCode(409);
+
+    this.userService.Add(new User
     {
-      var user = this.userService.GetByName(userViewModel.Name);
+      Name = userViewModel.Name,
+      Password = userViewModel.Password
+    });
 
-      if (user != null)
-        return StatusCode(409);
+    return Ok(user);
+  }
 
-      this.userService.Add(new User
-      {
-        Name = userViewModel.Name,
-        Password = userViewModel.Password
-      });
+  [HttpPost("~/api/login")]
+  public IActionResult ApiLogin(User userViewModel)
+  {
+    var user = this.userService.GetByName(userViewModel.Name);
 
-      return Ok(user);
-    }
+    if (user == null || userViewModel.Password != user.Password)
+      return BadRequest();
 
-    [HttpPost("~/api/login")]
-    public IActionResult ApiLogin(User userViewModel)
+    var claims = new[]
     {
-      var user = this.userService.GetByName(userViewModel.Name);
+      new Claim(ClaimTypes.Name, user.Name),
+      new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+      new Claim(ClaimTypes.Role, GroupNames.Admins)
+    };
 
-      if (user == null || userViewModel.Password != user.Password)
-        return BadRequest();
+    var token = this.tokenService.GenerateAccessToken(claims);
+    var refreshToken = this.tokenService.GenerateRefreshToken();
 
-      var claims = new[]
-      {
-        new Claim(ClaimTypes.Name, user.Name),
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Role, GroupNames.Admins)
-      };
+    user.RefreshToken = refreshToken;
 
-      var token = this.tokenService.GenerateAccessToken(claims);
-      var refreshToken = this.tokenService.GenerateRefreshToken();
+    this.userService.Update(user);
 
-      user.RefreshToken = refreshToken;
-
-      this.userService.Update(user);
-
-      return new ObjectResult(new
-      {
-        token = token,
-        refreshToken = refreshToken
-      });
-
-    }
+    return new ObjectResult(new
+    {
+      token = token,
+      refreshToken = refreshToken
+    });
 
   }
 

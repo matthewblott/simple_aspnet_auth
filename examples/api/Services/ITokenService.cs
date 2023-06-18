@@ -1,12 +1,10 @@
-using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace simple_aspnet_auth
+namespace simple_aspnet_auth;
+
+public interface ITokenService
 {
-  public interface ITokenService
-  {
-    string GenerateAccessToken(IEnumerable<Claim> claims);
-    string GenerateRefreshToken();
-    ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
-  }
+  string GenerateAccessToken(IEnumerable<Claim> claims);
+  string GenerateRefreshToken();
+  ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
 }

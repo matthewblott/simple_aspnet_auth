@@ -1,25 +1,21 @@
 ﻿@{
-  var identity = this.User.Identity;
+  var identity = User.Identity;
   var name = identity.Name;
   var isAuthenticated = identity.IsAuthenticated;
 }
 
 @if(isAuthenticated)
 {
-
-  <div class="mt-1 mb-1 mr-1 text-light">Welcome @name</div>
-  <form class="form-inline" method="post" asp-controller="Login" asp-action="Logout">
-    <button class="btn btn-outline-success mt-1 mb-1 mr-1">Logout</button>
+  <div>Welcome @name</div>
+  <form method="post" asp-controller="Login" asp-action="Logout">
+    <button role="button">Logout</button>
   </form>
-
 }
 else
 {
-
-  <form class="form-inline" method="post" asp-controller="Login" asp-action="Login">
-    <input class="form-control mt-1 mb-1 mr-1 bg-light" name="Name" placeholder="name" required>
-    <input class="form-control mt-1 mb-1 mr-1 bg-light" type="password" name="Password" placeholder="password" required>
-    <button class="btn btn-outline-success mt-1 mb-1 mr-1">Login</button>
+  <form method="post" asp-controller="Login" asp-action="Login">
+    <input name="Name" placeholder="name" required>
+    <input type="password" name="Password" placeholder="password" required>
+    <button>Login</button>
   </form>
-
 }

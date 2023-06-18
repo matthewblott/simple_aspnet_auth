@@ -5,36 +5,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <link rel="stylesheet" href="~/styles/libs/bootstrap.min.css">
-  <link rel="stylesheet" href="~/styles/libs/tether-1.1.1.min.css">
-  <link rel="stylesheet" href="~/styles/libs/font-awesome-4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="~/styles/site.min.css">
+  <link rel="stylesheet" href="~/css/pico.css">
+  <link rel="stylesheet" href="~/css/main.css">
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark pl-4 pt-3 pb-3">
-    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-      Simple AspNet Auth
-    </a>
-    <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="exCollapsingNavbar2">
+<nav>
+  <h1>
+    Simple AspNet Auth
+  </h1>
 
-      @Html.Partial("_Login")
-				
-    </div>
-  </nav>
+  @await Html.PartialAsync("_Login")
+</nav>
 	
-  <div class="container-fluid">
-    @RenderBody()
-  </div>
-
-  <script src="~/scripts/libs/jquery-3.2.1.js"></script>
-  <script src="~/scripts/libs/tether-1.1.1.min.js"></script>
-  <script src="~/scripts/libs/popper.js"></script>
-  <script src="~/scripts/libs/bootstrap.js"></script>
-  <script src="~/scripts/main.js"></script>    
+<div>
+  @RenderBody()
+</div>
   
 </body>
 </html>
