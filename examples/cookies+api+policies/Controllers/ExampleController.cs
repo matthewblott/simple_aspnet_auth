@@ -45,10 +45,10 @@ public class ExampleController : Controller
   [HttpGet("~/api/tokeninfo")]
   public IActionResult TokenInfo()
   {
-    var authorization = this.Request.Headers["Authorization"].ToString();
-    var tokenstring = authorization.Substring("Bearer ".Length).Trim();
+    var authorization = Request.Headers["Authorization"].ToString();
+    var tokenString = authorization["Bearer ".Length..].Trim();
     var handler = new JwtSecurityTokenHandler();
-    var token = handler.ReadJwtToken(tokenstring);
+    var token = handler.ReadJwtToken(tokenString);
 
     return Ok(new { token });
 

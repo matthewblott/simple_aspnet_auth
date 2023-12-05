@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_aspnet_auth", "api\simple_aspnet_auth.csproj", "{5F2AE9B7-D466-4D4B-9F68-6BB17055B10F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{5F2AE9B7-D466-4D4B-9F68-6BB17055B10F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_aspnet_auth", "cookies\simple_aspnet_auth.csproj", "{C10A249C-77AA-4BCD-9FE9-55244BA550A5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cookies", "cookies\cookies.csproj", "{C10A249C-77AA-4BCD-9FE9-55244BA550A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_aspnet_auth", "cookies+api\simple_aspnet_auth.csproj", "{DAE6C4FF-E99F-4366-B415-07212DEC0B23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cookies_api", "cookies+api\cookies_api.csproj", "{DAE6C4FF-E99F-4366-B415-07212DEC0B23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple_aspnet_auth", "cookies+api+policies\simple_aspnet_auth.csproj", "{958AFB76-AAED-4226-87E4-BDE9C6ACB6F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cookies_api_policies", "cookies+api+policies\cookies_api_policies.csproj", "{958AFB76-AAED-4226-87E4-BDE9C6ACB6F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

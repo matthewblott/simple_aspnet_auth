@@ -87,12 +87,28 @@ public class LoginController : Controller
     if (user == null || userViewModel.Password != user.Password)
       return BadRequest();
 
-    var claims = new[]
-    {
-      new Claim(ClaimTypes.Name, user.Name),
-      new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-      new Claim(ClaimTypes.Role, GroupNames.Admins)
-    };
+    // var claims = new[]
+    // {
+    //   new Claim(ClaimTypes.Name, user.Name),
+    //   new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+    //   new Claim(ClaimTypes.Role, GroupNames.Admins)
+    // };
+    
+    var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Name) };
+    var groups = user.Groups;
+
+    foreach (var group in groups)
+      claims.Add(new Claim(group.Name, group.Id.ToString()));
+
+    var isAdmin = groups.Any(_ => _.Name == GroupNames.Admins);
+
+    if(isAdmin)
+      claims.Add(new Claim(ClaimTypes.Role, GroupNames.Admins));
+
+    var isSuperUser = groups.Any(_ => _.Name == GroupNames.SuperUsers);
+
+    if(isSuperUser)
+      claims.Add(new Claim(ClaimTypes.Role, GroupNames.SuperUsers));
 
     var token = _tokenService.GenerateAccessToken(claims);
     var refreshToken = _tokenService.GenerateRefreshToken();
@@ -101,11 +117,7 @@ public class LoginController : Controller
 
     _userService.Update(user);
 
-    return new ObjectResult(new
-    {
-      token = token,
-      refreshToken = refreshToken
-    });
+    return new ObjectResult(new { token, refreshToken });
 
   }
 
