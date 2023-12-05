@@ -1,6 +1,6 @@
-﻿# simple_aspnet_auth
+# simple_aspnet_auth
 
-Simple ASP.NET Authorisation boilerplate project. No EF, no database, no IdentityServer4, no session storage, just a basic logging in system for both cookies and JWT with a couple of authorisation policies and a controller with a set of examples. Updated recently to .NET 6.
+Simple ASP.NET Authorisation boilerplate project. No EF, no database, no IdentityServer4, no session storage, just a basic logging in system for both cookies and JWT with a couple of authorisation policies and a controller with a set of examples. Updated recently to .NET 8.
 
 ### Getting Started
 
