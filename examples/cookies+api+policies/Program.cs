@@ -24,11 +24,9 @@ builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddOptions();
 builder.Services.Configure<JwtSettings>(configSection);
-builder.Services.AddAuthorization(options =>
-{
-  options.AddPolicy(GroupNames.Admins, policy => { policy.Requirements.Add(new AdminRequirement()); });
-  options.AddPolicy(GroupNames.SuperUsers, policy => { policy.Requirements.Add(new AdminRequirement(true)); });
-});
+builder.Services.AddAuthorizationBuilder()
+  .AddPolicy(GroupNames.Admins, policy => { policy.Requirements.Add(new AdminRequirement()); })
+  .AddPolicy(GroupNames.SuperUsers, policy => { policy.Requirements.Add(new AdminRequirement(true)); });
 builder.Services.AddSingleton<IAuthorizationHandler, AdminHandler>();
 builder.Services.AddAuthentication(options => 
 {
@@ -52,7 +50,7 @@ builder.Services.AddAuthentication(options =>
     {
       if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
       {
-        context.Response.Headers.Add("Token-Expired", true.ToString().ToLower());
+        context.Response.Headers.Append("Token-Expired", true.ToString().ToLower());
       }
       return Task.CompletedTask;
     }

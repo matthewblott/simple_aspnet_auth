@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Newtonsoft.Json;
+﻿namespace simple_aspnet_auth;
 
-namespace simple_aspnet_auth;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 public class UserService : IUserService
 {
@@ -12,47 +9,44 @@ public class UserService : IUserService
 
   public UserService()
   {
-    if (File.Exists(Filename))
+    if (!File.Exists(Filename))
     {
-      var json = File.ReadAllText(Filename);
-      this._users = JsonConvert.DeserializeObject<IList<User>>(json);
+      return;
     }
 
-  }
+    var json = File.ReadAllText(Filename);
 
-  public User GetByName(string name)
-  {
-    var q = from x in this._users where x.Name == name select x;
-    var user = q.FirstOrDefault();
-
-    return user;
+    _users = JsonSerializer.Deserialize<IList<User>>(json);
 
   }
+
+  public User GetByName(string name) => _users.FirstOrDefault(u => u.Name == name);
 
   public void Add(User user)
   {
-    user.Id = this._users.Count() + 1;
-
-    this._users.Add(user);
-
-    this.SaveChanges();
-
+    user.Id = _users.Count + 1;
+  
+    _users.Add(user);
+  
+    SaveChanges();
+  
   }
-
+  
   public void Update(User user)
   {
-    this._users.Remove(this.GetByName(user.Name));
-    this._users.Add(user);
-    this.SaveChanges();
-
+    _users.Remove(GetByName(user.Name));
+    _users.Add(user);
+    SaveChanges();
+  
   }
 
   private void SaveChanges()
   {
-    var json = JsonConvert.SerializeObject(this._users, Formatting.Indented);
-
+    var json = JsonSerializer.Serialize(_users);
+    
     File.WriteAllText(Filename, json);
-
+  
   }
-
+  
 }
+

@@ -5,11 +5,9 @@ Simple ASP.NET Authorisation boilerplate project. No EF, no database, no Identit
 ### Getting Started
 
 To get up and running just ```cd``` to the root where the ```.csproj``` file resides and run the following commands.
-
 ```
 cd examples/cookies+api
 dotnet run
-
 ```
 
 ### Examples
@@ -24,34 +22,29 @@ You can then run the series of tests below and see which sections you are able t
 
 #### Cookies
 
-Browse to ```http://localhost/auth``` and if you are logged in under any user you should see the following. 
-
+Browse to ```http://localhost:5000/cookie/auth``` and if you are logged in under any user you should see the following:
 ```
 Only authenticated cookie based requests from superusers receive this message.
 ```
 
-Browse to ```http://localhost/superuser``` and if you are logged in under a user in either ```superusers``` or ```admins``` you should see the following.
-
+Browse to ```http://localhost:5000/cookie/superuser``` and if you are logged in under a user in either ```superusers``` or ```admins``` you should see the following. If you are not then you access will be denied:
 ```
 Only authenticated cookie based requests from superusers receive this message.
 ```
 
-Browse to ```http://localhost/admin``` and if you are logged in under a user in ```admins``` you should see the following.
-
+Browse to ```http://localhost:5000/cookie/admin``` and if you are logged in under a user in ```admins``` you should see the following. If you are not then you access will be denied:
 ```
 Only authenticated cookie based requests from admins receive this message.
 ```
 
 #### JWT
 
-The first command gets a token which will be needed for subsequent requests. In the example below the user ```admin``` with the password ```password``` is used but there are other logins to test which will give different results.
-
+The first command gets a token which will be needed for subsequent requests. In the example below the user ```admin``` with the password ```password``` is used but there are other logins to test which will give different results:
 ```
 curl -X POST http://localhost:5000/api/login -H "Content-Type: application/x-www-form-urlencoded" -d "Name=admin&Password=password"
 ```
 
-The above command should result in something similar to the following (obviously the token value will be different).
-
+The above command should result in something similar to the following (obviously the token value will be different):
 ```
 
 {  
@@ -59,52 +52,53 @@ The above command should result in something similar to the following (obviously
 }
 ```
 
-The token value is then used with subsequent requests. For the examples below replace ```TOKEN_VALUE``` with whatever value is obtained from the step above.
-
+The token value is then used with subsequent requests. If you have `jq` installed you can set an environment variable with the returned `token` value using the following example:
 ```
-curl http://localhost:5000/api/auth -H "Authorization: Bearer TOKEN_VALUE"
+TOKEN_VALUE=`(curl -X POST http://localhost:5000/api/login -H "Content-Type: application/x-www-form-urlencoded" -d "Name=admin&Password=password" | jq -r '.token')`
 ```
 
-No matter what user your token is for you should see the following.
+For the examples below make sure the ```TOKEN_VALUE``` environemnt variable is set to whatever is returned from the sign in step.
 
+Run the following to check you have signed in successfully:
+```
+curl http://localhost:5000/api/auth -H "Authorization: Bearer ${TOKEN_VALUE}"
+```
+
+No matter what permission settings the user your token is for has you should see the following:
 ```
 Only authenticated token based requests receive this message.
 ```
 
-The following test will work for users in either ```superusers``` or ```admins```.
-
+The following test will work for users in either ```superusers``` or ```admins```:
 ```
-curl http://localhost:5000/api/superuser -H "Authorization: Bearer TOKEN_VALUE"
+curl http://localhost:5000/api/superuser -H "Authorization: Bearer ${TOKEN_VALUE}"
 ```
 
-The above command should produce the following.
-
+The above command should produce the following:
 ```
 Only authenticated token based requests from superusers receive this message.
 ```
 
-The following test will work for users in ```admins```.
-
+The following test will work for users in ```admins```:
 ```
-curl http://localhost:5000/api/admin -H "Authorization: Bearer TOKEN_VALUE"
+curl http://localhost:5000/api/admin -H "Authorization: Bearer ${TOKEN_VALUE}"
 ```
 
-The above command should produce the following.
-
+The above command should produce the following:
 ```
 Only authenticated token based requests from admins receive this message.
 ```
 
-The following example illustrates manipulating the JWT, the code is in the ```TokenInfo``` method of the ```ExampleController``` class.
-
+The following example illustrates manipulating the JWT, the code is in the ```TokenInfo``` method of the ```ExampleController``` class:
 ```
-curl http://localhost:5000/api/tokeninfo -H "Authorization: Bearer TOKEN_VALUE"
-```
-
-Any authenticated user should be presented with something similar to the following.
-
+curl http://localhost:5000/api/tokeninfo -H "Authorization: Bearer ${TOKEN_VALUE}"
 ```
 
+Any authenticated user should be presented with something similar to the following:
+<details>
+<summary>Expand to view the `json`.</summary>
+
+```
 {  
    "token":{  
       "actor":null,
@@ -251,11 +245,11 @@ Any authenticated user should be presented with something similar to the followi
    }
 }
 ```
+</details>
 
 #### Cookies and JWT
 
-The address ```http://localhost/auth``` is available for both cookie and JWT based logins and the user should see the following message after execution.
-
+The address ```http://localhost:5000/auth``` is available for both cookie and JWT based logins and the user should see the following message after execution:
 ```
 Only authenticated requests receive this message.
 ```
